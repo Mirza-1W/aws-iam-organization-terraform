@@ -60,3 +60,18 @@ resource "aws_iam_user_group_membership" "help_membership" {
   user   = each.value
   groups = [aws_iam_group.helpdesk.name]
 }
+
+resource "aws_s3_bucket" "dev_bucket" {
+  bucket = "technova-dev-bucket-${random_string.suffix.result}"
+}
+
+resource "aws_s3_bucket" "qa_bucket" {
+  bucket = "technova-qa-bucket-${random_string.suffix.result}"
+}
+
+resource "random_string" "suffix" {
+  length  = 5
+  special = false
+  upper   = false
+}
+
