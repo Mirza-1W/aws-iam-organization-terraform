@@ -1,28 +1,32 @@
-Project: AWS IAM Organization Setup using Terraform
+🚀 AWS IAM Organization Setup using Terraform
 📌 Overview
 
-This project provisions and secures an AWS IAM organizational structure using Terraform.
-It follows modular design principles and enforces enterprise-grade security controls.
+This project implements an enterprise-grade AWS IAM organizational model using Terraform with a modular architecture and remote state backend.
 
-The infrastructure includes:
+It simulates a real-world company environment (“Technova”) with structured departments, role-based access control, least-privilege policies, and enforced security governance.
 
-IAM users across multiple departments
+The project follows production-style Git workflow (feature branches + pull requests + semantic versioning) to reflect real DevOps practices.
 
-IAM groups and role-based access
+🏢 Business Scenario
 
-Custom least-privilege policies
+A company with 25 employees across three departments requires:
 
-Strict account password policy
+Structured IAM grouping
 
-MFA enforcement
+Role-based access control (RBAC)
 
-Modular Terraform architecture
+Least-privilege enforcement
 
-Version-controlled infrastructure lifecycle
+Centralized security governance
+
+MFA enforcement for privileged actions
+
+Version-controlled infrastructure
+
+This Terraform project provisions and secures that entire model.
 
 🏗 Architecture
-
-Departments:
+Departments
 
 Developers (10 users)
 
@@ -32,25 +36,52 @@ Helpdesk (7 users)
 
 Each department:
 
-Has its own IAM group
+Has a dedicated IAM group
 
-Has a custom IAM policy
+Has a custom least-privilege IAM policy
 
-Users automatically attached via Terraform
+Users are automatically attached using Terraform for_each
 
-Security Controls:
+Access boundaries enforced via policy documents
+
+🔐 Security Controls Implemented
+Account Password Policy
 
 Minimum password length: 14
 
 Password reuse prevention: 10
 
-Hard password expiry enabled
+Password expiration: 90 days
 
-MFA required for privileged operations
+Hard expiry enabled
 
-📂 Project Structure
+Uppercase, lowercase, numbers, symbols required
+
+MFA Enforcement
+
+A conditional deny policy ensures:
+
+All API actions are denied if MFA is not configured
+
+Only MFA setup and authentication actions are allowed without MFA
+
+This simulates enterprise-grade security posture.
+
+🧱 Terraform Architecture
+Remote Backend
+
+S3 bucket for remote state
+
+DynamoDB table for state locking
+
+State consistency ensured across environments
+
+Modular Structure
+
 .
 ├── main.tf
+├── provider.tf
+├── versions.tf
 ├── security.tf
 ├── policies.tf
 ├── modules/
@@ -58,47 +89,77 @@ MFA required for privileged operations
 │       ├── main.tf
 │       ├── variables.tf
 │       └── outputs.tf
-├── versions.tf
-├── provider.tf
 
-🔐 Security Implementation
 
-Enforced IAM password policy
+Design Principles
 
-MFA conditional deny policy
+Separation of concerns
 
-Least-privilege access per department
+Reusable module design
 
-Controlled EC2/S3 access based on role
+Root module kept minimal
 
-🚀 Terraform Commands Used
+No state destruction during refactor (terraform state mv used)
+
+🛠 Terraform Operations Performed
 terraform init
-terraform plan
-terraform apply
 terraform validate
 terraform fmt
+terraform plan
+terraform apply
 terraform state mv
 
-🏷 Versioning
 
-Release Tags:
+State integrity was preserved during modular refactoring.
 
-v1.0.0 — IAM users and groups
+🔁 Git Workflow (Enterprise Simulation)
+
+Feature branching strategy
+
+Pull request–based merges
+
+Merge commits (not squash)
+
+Semantic versioning
+
+Release tagging
+
+This simulates real enterprise DevOps collaboration.
+
+🏷 Release History
+
+v1.0.0 — Initial IAM users and groups
 
 v1.1.0 — Custom least-privilege policies
 
-v1.2.0 — Modular refactor + MFA enforcement
+v1.2.0 — Modular refactor + MFA enforcement + enhanced password security
 
 🎯 What This Project Demonstrates
 
 Terraform modular architecture
 
-State management
+Remote backend configuration
 
-IAM security best practices
+IAM least-privilege design
 
-Git branching workflow
+Security governance enforcement
 
-Infrastructure version control
+MFA conditional policy design
 
-Enterprise security enforcement
+State migration without infrastructure destruction
+
+Enterprise Git workflow
+
+Infrastructure lifecycle management
+
+📈 Future Enhancements (Planned)
+
+GitHub Actions CI pipeline for Terraform validation
+
+Multi-environment support using workspaces (dev/prod)
+
+Cost governance controls
+
+AWS Organizations multi-account model
+
+Policy-as-Code validation (OPA or Sentinel)
